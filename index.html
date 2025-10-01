@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>For My Love 💖</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;700&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <canvas id="hearts"></canvas>
+    <audio id="song" loop>
+        <source src="assets/song.mp3" type="audio/mpeg">
+    </audio>
+
+    <header class="topbar">
+        <div class="container">
+            <div class="brand">For My Jannat</div>
+            <button class="music-toggle" id="musicToggle" aria-label="Toggle music">🎵</button>
+        </div>
+    </header>
+
+    <main>
+        <section class="hero">
+            <div class="container hero-wrap">
+                <div class="hero-copy">
+                    <h1 class="title">Happy Birthday, My Love</h1>
+                    <p class="subtitle">Every beat of my heart spells your name.</p>
+                    <button class="cta" id="openLetter">Open Your Letter ✨</button>
+                </div>
+                <figure class="hero-portrait">
+                    <img src="assets/IMG-20250927-WA0011.jpg" alt="my love portrait" id="heroPortrait">
+                </figure>
+            </div>
+        </section>
+
+        <section class="reasons" id="reasons">
+            <div class="container">
+                <h2>10 Reasons I Adore You</h2>
+                <ul class="grid">
+                    <li>Your smile lights up my world</li>
+                    <li>You are kind and endlessly caring</li>
+                    <li>Your laugh is my favorite sound</li>
+                    <li>You make ordinary moments magical</li>
+                    <li>Your strength inspires me every day</li>
+                    <li>You believe in us fiercely</li>
+                    <li>Your hugs feel like home</li>
+                    <li>You are my calm and my adventure</li>
+                    <li>You see the best in me</li>
+                    <li>Because you are you — perfectly you</li>
+                </ul>
+            </div>
+        </section>
+
+        <section class="gallery" id="gallery">
+            <div class="container">
+                <h2>Our Little Moments</h2>
+                <div class="photos">
+                    <img src="assets/IMG-20250927-WA0011.jpg" alt="memory 1">
+                    <img src="assets/IMG-20251001-WA0006.jpg" alt="memory 2">
+                    <img src="assets/IMG-20251001-WA0008.jpg" alt="memory 3">
+                    <img src="assets/IMG-20251001-WA0015.jpg" alt="memory 4">
+                    <img src="assets/IMG-20251001-WA0016.jpg" alt="memory 5">
+                    <img src="assets/IMG-20251001-WA0017.jpg" alt="memory 6">
+                    <img src="assets/IMG-20251001-WA0018.jpg" alt="memory 7">
+                    <img src="assets/IMG-20251001-WA0019.jpg" alt="memory 8">
+                    <img src="assets/IMG-20251001-WA0020.jpg" alt="memory 9">
+                    <img src="assets/IMG-20251001-WA0021.jpg" alt="memory 10">
+                </div>
+            </div>
+        </section>
+
+        <section class="timeline" id="timeline">
+            <div class="container">
+                <h2>Our Story</h2>
+                <div class="steps">
+                    <div class="step"><span>Day 1</span> We met and my world changed.</div>
+                    <div class="step"><span>First Date</span> Time flew, hearts stayed.</div>
+                    <div class="step"><span>Today</span> I choose you, always.</div>
+                    <div class="step"><span>Forever</span> Hand in hand through it all.</div>
+                </div>
+            </div>
+        </section>
+
+        <section class="quote">
+            <div class="container">
+                <blockquote>“In a sea of people, my eyes will always search for you.”</blockquote>
+            </div>
+        </section>
+    </main>
+
+    <div class="modal" id="photoLightbox" aria-hidden="true" role="dialog" aria-label="Photo viewer">
+        <div class="modal-content lightbox">
+            <button class="close" id="closeLightbox" aria-label="Close">×</button>
+            <img id="lightboxImg" alt="memory">
+        </div>
+    </div>
+
+    <div class="modal" id="letterModal" aria-hidden="true" role="dialog" aria-labelledby="letterTitle">
+        <div class="modal-content">
+            <button class="close" id="closeLetter" aria-label="Close">×</button>
+            <h3 id="letterTitle">A Letter to My Jannat</h3>
+            <p class="typewriter" id="letterText"></p>
+            <button class="cta secondary" id="confettiBtn">Shower with Love 🎉</button>
+        </div>
+    </div>
+
+    <footer class="footer">
+        <div class="container">
+            <p>Made with all my love — <span id="year"></span></p>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
+
