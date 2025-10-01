@@ -45,6 +45,20 @@ const musicToggle = document.getElementById('musicToggle');
 const song = document.getElementById('song');
 let isPlaying = false;
 
+// Auto-play music when page loads
+window.addEventListener('load', async () => {
+    if (!song) return;
+    try {
+        await song.play();
+        isPlaying = true;
+        musicToggle.textContent = '⏸️';
+    } catch (e) {
+        console.warn('Autoplay blocked:', e);
+        // If autoplay is blocked, show play button
+        musicToggle.textContent = '🎵';
+    }
+});
+
 musicToggle?.addEventListener('click', async () => {
     if (!song) return;
     try {
