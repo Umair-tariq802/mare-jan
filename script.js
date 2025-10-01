@@ -40,10 +40,8 @@ photoLightbox?.addEventListener('click', (e) => {
     if (e.target === photoLightbox) closeLightbox();
 });
 
-// Music toggle
-const musicToggle = document.getElementById('musicToggle');
+// Auto-play music immediately when page loads - no pause option
 const song = document.getElementById('song');
-let isPlaying = false;
 
 // Auto-play music immediately when page loads
 document.addEventListener('DOMContentLoaded', async () => {
@@ -52,8 +50,6 @@ document.addEventListener('DOMContentLoaded', async () => {
         song.muted = false; // Unmute the audio
         song.volume = 0.7; // Set volume to 70%
         await song.play();
-        isPlaying = true;
-        musicToggle.textContent = '⏸️';
     } catch (e) {
         console.warn('Autoplay blocked:', e);
         // Try again after user interaction
@@ -61,8 +57,6 @@ document.addEventListener('DOMContentLoaded', async () => {
             try {
                 song.muted = false;
                 await song.play();
-                isPlaying = true;
-                musicToggle.textContent = '⏸️';
             } catch (err) {
                 console.warn('Still blocked:', err);
             }
@@ -72,26 +66,13 @@ document.addEventListener('DOMContentLoaded', async () => {
 
 // Also try on window load as backup
 window.addEventListener('load', async () => {
-    if (!song || isPlaying) return;
+    if (!song) return;
     try {
         song.muted = false;
         song.volume = 0.7;
         await song.play();
-        isPlaying = true;
-        musicToggle.textContent = '⏸️';
     } catch (e) {
         console.warn('Autoplay blocked on load:', e);
-    }
-});
-
-musicToggle?.addEventListener('click', async () => {
-    if (!song) return;
-    try {
-        if (!isPlaying) { await song.play(); } else { song.pause(); }
-        isPlaying = !isPlaying;
-        musicToggle.textContent = isPlaying ? '⏸️' : '🎵';
-    } catch (e) {
-        console.warn('Autoplay blocked:', e);
     }
 });
 
