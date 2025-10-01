@@ -45,17 +45,42 @@ const musicToggle = document.getElementById('musicToggle');
 const song = document.getElementById('song');
 let isPlaying = false;
 
-// Auto-play music when page loads
-window.addEventListener('load', async () => {
+// Auto-play music immediately when page loads
+document.addEventListener('DOMContentLoaded', async () => {
     if (!song) return;
     try {
+        song.muted = false; // Unmute the audio
+        song.volume = 0.7; // Set volume to 70%
         await song.play();
         isPlaying = true;
         musicToggle.textContent = '⏸️';
     } catch (e) {
         console.warn('Autoplay blocked:', e);
-        // If autoplay is blocked, show play button
-        musicToggle.textContent = '🎵';
+        // Try again after user interaction
+        document.addEventListener('click', async () => {
+            try {
+                song.muted = false;
+                await song.play();
+                isPlaying = true;
+                musicToggle.textContent = '⏸️';
+            } catch (err) {
+                console.warn('Still blocked:', err);
+            }
+        }, { once: true });
+    }
+});
+
+// Also try on window load as backup
+window.addEventListener('load', async () => {
+    if (!song || isPlaying) return;
+    try {
+        song.muted = false;
+        song.volume = 0.7;
+        await song.play();
+        isPlaying = true;
+        musicToggle.textContent = '⏸️';
+    } catch (e) {
+        console.warn('Autoplay blocked on load:', e);
     }
 });
 
