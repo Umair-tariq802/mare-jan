@@ -7,6 +7,10 @@ const closeLetterBtn = document.getElementById('closeLetter');
 const letterModal = document.getElementById('letterModal');
 const letterText = document.getElementById('letterText');
 const confettiBtn = document.getElementById('confettiBtn');
+const openWishesBtn = document.getElementById('openWishes');
+const closeWishesBtn = document.getElementById('closeWishes');
+const wishesModal = document.getElementById('wishesModal');
+const wishesText = document.getElementById('wishesText');
 const photoLightbox = document.getElementById('photoLightbox');
 const closeLightboxBtn = document.getElementById('closeLightbox');
 const lightboxImg = document.getElementById('lightboxImg');
@@ -24,6 +28,18 @@ function closeModal() {
 
 openLetterBtn?.addEventListener('click', openModal);
 closeLetterBtn?.addEventListener('click', closeModal);
+
+function openWishesModal() {
+    if (!wishesModal) return;
+    wishesModal.setAttribute('aria-hidden', 'false');
+    typeWriter(bestWishes, wishesText, 18);
+}
+function closeWishesModal() {
+    if (!wishesModal) return;
+    wishesModal.setAttribute('aria-hidden', 'true');
+}
+openWishesBtn?.addEventListener('click', openWishesModal);
+closeWishesBtn?.addEventListener('click', closeWishesModal);
 
 // Photo lightbox
 function openLightbox(src) {
@@ -77,15 +93,34 @@ window.addEventListener('load', async () => {
 });
 
 // Typewriter
-const loveLetter = `My dearest Jannat,
+const loveLetter = `My Dearest Jannat,
 
-On your birthday, I just want you to know something simple and true: you are my favorite person, my safe place, and the most beautiful chapter of my life. Thank you for your love, your patience, your laughter, and your magic that turns ordinary days into memories.
+On this special day, I just want to tell you how deeply you mean to me. You are not only my love, but my calm in the storms, my joy in the silence, and the most beautiful blessing life has ever given me.
 
-I promise to choose you in every moment — to hold your hand through quiet nights and wild adventures, to hear your heart when words fall short, to love you gently and fiercely in every season.
+Your smile is my sunrise, your voice is my favorite song,. With you, even the simplest moments feel like treasures, and every day becomes a memory worth keeping.
 
-Happy Birthday, my love. Today and always, I am yours.
+I promise to stand by you in every season — to hold your hand through every joy and every trial, to listen when your heart whispers, and to love you endlessly with both gentleness and passion.
 
-— Yours forever`;
+Happy Birthday, my love. May today be as radiant as your soul, and may you always know that wherever life takes us, I am — and will forever be — yours.
+
+With all my love,
+Yours, always ❤️`;
+
+const bestWishes = `🌙 Alhamdulillah for your life 🖤 May Allah grant you barakah in your years & noor in your heart.
+
+✨ Another year, another blessing 🪴 May Allah guide you closer to Jannah every step.
+
+🌸 Bismillah for this new age 🤲 May Allah protect you from every harm & grant you peace.
+
+🌹 May your life always be filled with Rahmah, Barakah & Noor 🌌.
+
+🤍 May Allah write only goodness, ease & happiness in your destiny ahead.
+
+🌺 Hayaatun tayyibah (a pure life) 🌿 is what I pray for you today & always.
+
+☀️ May every year bring you closer to Allah and farther from dunya worries.
+
+🍯 BaarakAllahu laka in your life, health, and rizq ✨.`;
 
 function typeWriter(text, el, speed = 20) {
     if (!el) return;
