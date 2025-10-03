@@ -54,16 +54,25 @@ canvas#hearts { position: fixed; inset: 0; z-index: 0; pointer-events: none; }
     position: absolute;
     inset: -10px;
     border-radius: 26px;
-    background: radial-gradient(60% 60% at 30% 30%, rgba(255, 179, 199, 0.55), rgba(255, 77, 135, 0.35) 40%, rgba(255, 77, 135, 0.0) 70%),
-                radial-gradient(70% 70% at 70% 70%, rgba(255, 118, 148, 0.45), rgba(255, 77, 135, 0.2) 45%, rgba(255, 77, 135, 0.0) 75%);
-    filter: blur(18px);
+    background:
+        radial-gradient(60% 60% at 30% 30%, rgba(255, 179, 199, 0.55), rgba(255, 77, 135, 0.35) 40%, rgba(255, 77, 135, 0.0) 70%),
+        radial-gradient(70% 70% at 70% 70%, rgba(255, 118, 148, 0.45), rgba(255, 77, 135, 0.2) 45%, rgba(255, 77, 135, 0.0) 75%),
+        radial-gradient(4px 4px at 15% 20%, rgba(255,255,255,0.7), rgba(255,255,255,0) 70%),
+        radial-gradient(3px 3px at 85% 30%, rgba(255,255,255,0.6), rgba(255,255,255,0) 70%),
+        radial-gradient(3px 3px at 25% 80%, rgba(255,255,255,0.55), rgba(255,255,255,0) 70%);
+    filter: blur(18px) saturate(1.05);
     z-index: -1;
-    animation: heroGlow 4s ease-in-out infinite alternate;
+    animation: heroGlow 4s ease-in-out infinite alternate, sparkleDrift 10s linear infinite;
 }
 
 @keyframes heroGlow {
-    0% { opacity: 0.45; transform: scale(0.98); }
-    100% { opacity: 0.75; transform: scale(1.02); }
+    0% { opacity: 0.45; transform: scale(0.985); }
+    50% { opacity: 0.78; transform: scale(1.015); }
+    100% { opacity: 0.6; transform: scale(1.0); }
+}
+@keyframes sparkleDrift {
+    0% { background-position: 0 0, 0 0, 0 0, 0 0, 0 0; }
+    100% { background-position: 0 0, 0 0, 30px -20px, -25px 20px, 20px 25px; }
 }
 
 /* Distinct animated gradient border just for the first hero image */
@@ -72,12 +81,11 @@ canvas#hearts { position: fixed; inset: 0; z-index: 0; pointer-events: none; }
     position: absolute;
     inset: -4px; /* thickness outside the image */
     border-radius: 24px;
-    background: conic-gradient(
-        from 0deg,
-        #ff4d87, #ffb3c7, #ff758f, #ff4d87
-    );
+    background:
+        repeating-conic-gradient(from 0deg, rgba(255, 77, 135, 0.9) 0 12deg, transparent 12deg 22deg),
+        conic-gradient(from 0deg, #ff4d87, #ffb3c7, #ff758f, #ff4d87);
     z-index: -1;
-    animation: spinBorder 8s linear infinite;
+    animation: spinBorder 14s linear infinite, hueFlow 8s ease-in-out infinite alternate;
     /* Create only the ring using masking */
     -webkit-mask: 
         linear-gradient(#000 0 0) content-box, 
@@ -85,11 +93,15 @@ canvas#hearts { position: fixed; inset: 0; z-index: 0; pointer-events: none; }
     -webkit-mask-composite: xor; /* Safari/Chromium */
             mask-composite: exclude; /* Firefox */
     padding: 4px; /* ring thickness */
-    filter: drop-shadow(0 0 16px rgba(255, 77, 135, 0.35));
+    filter: drop-shadow(0 0 14px rgba(255, 77, 135, 0.35)) drop-shadow(0 0 24px rgba(255, 179, 199, 0.25));
 }
 
 @keyframes spinBorder {
     to { transform: rotate(1turn); }
+}
+@keyframes hueFlow {
+    0% { filter: hue-rotate(0deg) drop-shadow(0 0 14px rgba(255, 77, 135, 0.35)); }
+    100% { filter: hue-rotate(35deg) drop-shadow(0 0 18px rgba(255, 179, 199, 0.35)); }
 }
 
 .reasons { padding: 60px 0; }
