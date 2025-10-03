@@ -32,7 +32,7 @@ body {
     background: linear-gradient(0deg, rgba(14,11,20,0), rgba(14,11,20,0.75));
 }
 .topbar .container { display: flex; align-items: center; justify-content: space-between; padding: 14px 20px; }
-.brand { font-family: 'Playfair Display', serif; font-weight: 700; letter-spacing: 0.5px; }
+.brand { font-family: 'Playfair Display', serif; font-weight: 700; letter-spacing: 0.5px; font-size: clamp(22px, 4.8vw, 40px); }
 .music-toggle { background: var(--glass); border: 1px solid #ffffff24; color: var(--text); padding: 8px 12px; border-radius: 999px; cursor: pointer; }
 
 canvas#hearts { position: fixed; inset: 0; z-index: 0; pointer-events: none; }
@@ -46,7 +46,51 @@ canvas#hearts { position: fixed; inset: 0; z-index: 0; pointer-events: none; }
 .cta.secondary { background: #ffffff12; border: 1px solid #ffffff22; box-shadow: none; }
 
 .hero-portrait { margin: 0; }
-.hero-portrait img { width: 100%; max-width: 380px; height: auto; border-radius: 20px; border: 1px solid #ffffff1a; box-shadow: 0 20px 40px #00000066; }
+.hero-portrait img { width: 100%; max-width: 380px; height: auto; border-radius: 20px; border: 1px solid #ffffff1a; box-shadow: 0 20px 40px #00000066; position: relative; z-index: 1; }
+/* Soft animated lighting behind the hero portrait */
+.hero-portrait { position: relative; }
+.hero-portrait::after {
+    content: '';
+    position: absolute;
+    inset: -10px;
+    border-radius: 26px;
+    background: radial-gradient(60% 60% at 30% 30%, rgba(255, 179, 199, 0.55), rgba(255, 77, 135, 0.35) 40%, rgba(255, 77, 135, 0.0) 70%),
+                radial-gradient(70% 70% at 70% 70%, rgba(255, 118, 148, 0.45), rgba(255, 77, 135, 0.2) 45%, rgba(255, 77, 135, 0.0) 75%);
+    filter: blur(18px);
+    z-index: -1;
+    animation: heroGlow 4s ease-in-out infinite alternate;
+}
+
+@keyframes heroGlow {
+    0% { opacity: 0.45; transform: scale(0.98); }
+    100% { opacity: 0.75; transform: scale(1.02); }
+}
+
+/* Distinct animated gradient border just for the first hero image */
+.hero-portrait::before {
+    content: '';
+    position: absolute;
+    inset: -4px; /* thickness outside the image */
+    border-radius: 24px;
+    background: conic-gradient(
+        from 0deg,
+        #ff4d87, #ffb3c7, #ff758f, #ff4d87
+    );
+    z-index: -1;
+    animation: spinBorder 8s linear infinite;
+    /* Create only the ring using masking */
+    -webkit-mask: 
+        linear-gradient(#000 0 0) content-box, 
+        linear-gradient(#000 0 0);
+    -webkit-mask-composite: xor; /* Safari/Chromium */
+            mask-composite: exclude; /* Firefox */
+    padding: 4px; /* ring thickness */
+    filter: drop-shadow(0 0 16px rgba(255, 77, 135, 0.35));
+}
+
+@keyframes spinBorder {
+    to { transform: rotate(1turn); }
+}
 
 .reasons { padding: 60px 0; }
 .reasons h2, .gallery h2, .timeline h2 { font-family: 'Playfair Display', serif; margin: 0 0 20px; }
