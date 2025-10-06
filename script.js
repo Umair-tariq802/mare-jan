@@ -550,6 +550,12 @@ window.addEventListener('load', () => {
             canvas?.classList.remove('on-top');
         }, 1800);
     }, 250);
+    // Fallback: force-remove banner after 6s in case transitions fail
+    setTimeout(() => {
+        if (openingBanner && openingBanner.style && !openingBanner.classList.contains('hide')) {
+            openingBanner.classList.add('hide');
+        }
+    }, 6000);
 });
 
 // Shower with Love: trigger fireworks + falling heart shower

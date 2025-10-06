@@ -52,7 +52,7 @@ canvas#hearts.on-top { z-index: 60; }
     opacity: 1;
     transition: opacity 600ms ease;
 }
-.opening-banner.hide { opacity: 0; pointer-events: none; }
+.opening-banner.hide { opacity: 0; pointer-events: none; visibility: hidden; }
 
 .opening-banner .cake { transform: scale(0.6); opacity: 0; transition: transform 500ms ease, opacity 500ms ease; font-size: clamp(48px, 14vw, 140px); }
 .opening-banner.show-cake .cake { transform: scale(1); opacity: 1; }
