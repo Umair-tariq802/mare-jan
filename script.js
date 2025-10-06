@@ -548,6 +548,24 @@ window.addEventListener('load', () => {
         setTimeout(() => {
             openingBanner?.classList.add('hide');
             canvas?.classList.remove('on-top');
+            // Start the song exactly when the opening banner disappears
+            if (song) {
+                try {
+                    song.muted = false;
+                    song.volume = 0.7;
+                    const playPromise = song.play();
+                    if (playPromise && typeof playPromise.then === 'function') {
+                        playPromise.catch(() => {
+                            // Fallback: wait for first user interaction
+                            document.addEventListener('click', async () => {
+                                try { song.muted = false; await song.play(); } catch (_) {}
+                            }, { once: true });
+                        });
+                    }
+                } catch (_) {
+                    // ignore
+                }
+            }
         }, 1800);
     }, 250);
     // Fallback: force-remove banner after 6s in case transitions fail
