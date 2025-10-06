@@ -80,15 +80,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         await song.play();
     } catch (e) {
         console.warn('Autoplay blocked:', e);
-        // Try again after user interaction
-        document.addEventListener('click', async () => {
-            try {
-                song.muted = false;
-                await song.play();
-            } catch (err) {
-                console.warn('Still blocked:', err);
-            }
-        }, { once: true });
+        // Graceful fallbacks handled below
     }
 });
 
@@ -103,6 +95,60 @@ window.addEventListener('load', async () => {
         console.warn('Autoplay blocked on load:', e);
     }
 });
+
+// Robust playback helper: retries and hooks multiple signals to maximize autoplay success
+function ensurePlayback(maxAttempts = 6, intervalMs = 600) {
+    if (!song) return () => {};
+    let attempts = 0;
+    let stopped = false;
+    const tryPlay = async () => {
+        if (stopped) return;
+        try {
+            song.muted = false;
+            song.volume = 0.7;
+            await song.play();
+            // Success: clean up listeners and timer
+            cleanup();
+        } catch (_) {
+            attempts += 1;
+            if (attempts >= maxAttempts) {
+                cleanup();
+            }
+        }
+    };
+    const timer = setInterval(tryPlay, intervalMs);
+    // Resume attempts on common user interactions and visibility
+    const onceOpts = { once: true, passive: true };
+    const onInteract = () => tryPlay();
+    document.addEventListener('click', onInteract, onceOpts);
+    document.addEventListener('touchstart', onInteract, onceOpts);
+    document.addEventListener('pointerdown', onInteract, onceOpts);
+    document.addEventListener('keydown', onInteract, onceOpts);
+    document.addEventListener('mousemove', onInteract, onceOpts);
+    document.addEventListener('visibilitychange', () => {
+        if (document.visibilityState === 'visible') tryPlay();
+    });
+    function cleanup() {
+        if (stopped) return;
+        stopped = true;
+        clearInterval(timer);
+        document.removeEventListener('click', onInteract);
+        document.removeEventListener('touchstart', onInteract);
+        document.removeEventListener('pointerdown', onInteract);
+        document.removeEventListener('keydown', onInteract);
+        document.removeEventListener('mousemove', onInteract);
+    }
+    // Kick off immediately
+    tryPlay();
+    return cleanup;
+}
+
+// Start the helper shortly after DOM is ready to improve chances without explicit user tap
+if (document.readyState === 'complete' || document.readyState === 'interactive') {
+    ensurePlayback();
+} else {
+    document.addEventListener('DOMContentLoaded', () => ensurePlayback(), { once: true });
+}
 
 // Typewriter
 const loveLetter = `My Dearest Jannat,
